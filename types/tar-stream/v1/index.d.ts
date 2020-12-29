@@ -38,6 +38,18 @@ export interface Extract extends stream.Writable {
     on(event: "entry", listener: (headers: Headers, stream: stream.PassThrough, next: () => void) => void): this;
 }
 
-export function extract(opts?: stream.WritableOptions): Extract;
+
+export interface ExtractOptions extends stream.WritableOptions {
+    /**
+     * Whether or not to attempt to extract a file that does not have an
+     * officially supported format in the `magic` header, such as `ustar`.
+     */
+    allowUnknownFormat?: boolean;
+    /**
+     * The encoding of the file name header.
+     */
+    filenameEncoding?: BufferEncoding;
+}
+export function extract(opts?: ExtractOptions): Extract;
 
 export function pack(opts?: stream.ReadableOptions): Pack;
